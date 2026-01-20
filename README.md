@@ -4,7 +4,7 @@ A premium, mobile-first restaurant website designed for high-end hospitality bra
 
 🚀 Live Demo
 
-
+[https://rustic-spoon-nu.vercel.app/]
 
 ✨ Key Features
 
@@ -41,7 +41,7 @@ Lucide Icons: Lightweight, crisp SVG icons.
 
 Clone the repository:
 
-git clone [https://github.com/Haris-Rindh/the-rustic-spoon.git]
+git clone [https://github.com/Haris-Rindh/rustic-spoon.git]
 
 
 Navigate to the project directory.
@@ -55,5 +55,6 @@ Typography: Playfair Display (Serif) for headings, Lato (Sans) for body text.
 Color Palette: Warm Earth Tones (Stone, Burnt Orange/Ember, Deep Brown).
 
 Imagery: Parallax scrolling hero section with overlay protection for text readability.
+
 
 © 2024 The Rustic Spoon Project. Designed & Developed by Haris Rindh.
