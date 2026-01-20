@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="The Rustic Spoon - Authentic farm-to-table dining experience in Napa Valley. Wood-fired cuisine, local ingredients, and warm hospitality.">
+    <meta property="og:title" content="The Rustic Spoon | Farm to Table">
+    <meta property="og:image"
+        content="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥄</text></svg>">
+
+    <title>The Rustic Spoon | Farm to Table</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Lato', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        rustic: {
+                            50: '#f9f8f6',
+                            100: '#efebe5',
+                            200: '#e0d8cc',
+                            300: '#c8bba8',
+                            400: '#af9b82',
+                            500: '#967d60',
+                            600: '#7d634b',
+                            700: '#634d3b',
+                            800: '#524034',
+                            900: '#43362e',
+                        },
+                        embers: {
+                            500: '#d97706',
+                            600: '#c2410c', // Primary Brand Color
+                            700: '#9a3412',
+                        }
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "url('https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')",
+                        'texture': "url('data:image/svg+xml,%3Csvg width=\\'40\\' height=\\'40\\' viewBox=\\'0 0 40 40\\' xmlns=\\'http://www.w3.org/2000/svg\\'%3E%3Cg fill=\\'%239C92AC\\' fill-opacity=\\'0.05\\' fill-rule=\\'evenodd\\'%3E%3Cpath d=\\'M0 40L40 0H20L0 20M40 40V20L20 40\\'/%3E%3C/g%3E%3C/svg%3E')",
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #efebe5;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #967d60;
+            border-radius: 5px;
+            border: 2px solid #efebe5;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7d634b;
+        }
+
+        /* Menu Dot Leader Animation */
+        .menu-item:hover .dots {
+            opacity: 0.8;
+            border-bottom-color: #c2410c;
+        }
+
+        /* Active Tab Styling */
+        .tab-btn.active {
+            background-color: #c2410c;
+            color: white;
+            border-color: #c2410c;
+        }
+
+        /* Fade In Animation */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* Mobile Menu Transition */
+        .mobile-menu-enter {
+            transform: translateX(100%);
+        }
+
+        .mobile-menu-active {
+            transform: translateX(0);
+        }
+
+        /* Map Grayscale Hover Effect */
+        .map-frame {
+            filter: grayscale(100%);
+            transition: filter 0.5s ease;
+        }
+
+        .map-frame:hover {
+            filter: grayscale(0%);
+        }
+
+        /* Modal Transitions */
+        .modal {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+    </style>
+</head>
+
+<body
+    class="font-sans text-rustic-900 bg-rustic-50 antialiased selection:bg-embers-600 selection:text-white flex flex-col min-h-screen">
+
+    <!-- Navigation -->
+    <nav id="navbar"
+        class="fixed w-full z-50 transition-all duration-300 py-6 text-white bg-gradient-to-b from-black/60 to-transparent">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="font-serif text-2xl md:text-3xl font-bold tracking-wider relative group z-50">
+                The Rustic Spoon
+                <span
+                    class="absolute -bottom-1 left-0 w-0 h-0.5 bg-embers-600 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div
+                class="hidden md:flex items-center space-x-6 text-xs lg:text-sm uppercase tracking-widest font-semibold">
+                <a href="#about" class="hover:text-embers-500 transition-colors">About</a>
+                <a href="#menu" class="hover:text-embers-500 transition-colors">Menu</a>
+                <a href="#events" class="hover:text-embers-500 transition-colors">Private Dining</a>
+                <a href="#testimonials" class="hover:text-embers-500 transition-colors">Reviews</a>
+                <a href="#gallery" class="hover:text-embers-500 transition-colors">Gallery</a>
+                <button onclick="openModal('gift')"
+                    class="text-embers-500 hover:text-embers-400 transition-colors flex items-center uppercase font-semibold"><i
+                        data-lucide="gift" class="w-4 h-4 mr-1"></i> Gifts</button>
+                <a href="#reserve"
+                    class="px-5 py-2 border-2 border-white hover:bg-embers-600 hover:border-embers-600 transition-all duration-300 rounded-sm ml-2">Reserve</a>
+            </div>
+
+            <!-- Mobile Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none z-50 p-2"
+                aria-label="Toggle Menu">
+                <i data-lucide="menu" class="w-8 h-8"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu"
+            class="fixed inset-0 bg-rustic-900/95 backdrop-blur-md z-40 transform translate-x-full transition-transform duration-300 flex flex-col items-center justify-center space-y-6 text-xl font-serif">
+            <a href="#about" class="text-white hover:text-embers-500 transition-colors mobile-link">About</a>
+            <a href="#menu" class="text-white hover:text-embers-500 transition-colors mobile-link">Menu</a>
+            <a href="#events" class="text-white hover:text-embers-500 transition-colors mobile-link">Private Dining</a>
+            <a href="#testimonials" class="text-white hover:text-embers-500 transition-colors mobile-link">Reviews</a>
+            <a href="#gallery" class="text-white hover:text-embers-500 transition-colors mobile-link">Gallery</a>
+            <button onclick="openModal('gift'); toggleMenu()"
+                class="text-embers-400 hover:text-white transition-colors mobile-link flex items-center"><i
+                    data-lucide="gift" class="w-5 h-5 mr-2"></i> Gift Cards</button>
+            <a href="#reserve" class="text-embers-500 font-bold mobile-link mt-4 text-2xl">Book a Table</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative min-h-screen flex flex-col justify-center items-center overflow-hidden pt-32 pb-16">
+        <!-- Background Image with Parallax-like fix -->
+        <div class="absolute inset-0 bg-hero-pattern bg-cover bg-center bg-no-repeat bg-fixed transform scale-105">
+        </div>
+        <div class="absolute inset-0 bg-black/50"></div> <!-- Darker Overlay for text readability -->
+
+        <div class="relative z-10 text-center text-white px-4 max-w-5xl mx-auto fade-in-section is-visible">
+            <p class="text-embers-500 font-bold tracking-[0.2em] uppercase mb-4 text-xs md:text-sm animate-pulse">Est.
+                2014 &bull; Napa Valley</p>
+            <h1
+                class="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-6 md:mb-8 leading-tight drop-shadow-lg">
+                Savor the <br /><span class="italic text-embers-500">Rustic</span> Flavor
+            </h1>
+            <h1
+                class="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-6 md:mb-10 leading-tight drop-shadow-lg">
+                Savor the <br /><span class="italic text-embers-500">Rustic</span> Flavor
+            </h1>
+            <p
+                class="text-base sm:text-lg md:text-2xl text-gray-100 mb-8 md:mb-12 max-w-xl md:max-w-2xl mx-auto font-light leading-relaxed drop-shadow-md">
+                Experience authentic farm-to-table dining where every dish tells a story of tradition, passion, and
+                local heritage.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
+                <a href="#menu"
+                    class="group px-6 sm:px-8 py-3 sm:py-4 bg-embers-600 text-white font-semibold tracking-wide hover:bg-embers-700 transition-all shadow-lg hover:shadow-embers-600/50 rounded-sm flex items-center justify-center text-sm sm:text-base">
+                    View Full Menu
+                    <i data-lucide="arrow-right"
+                        class="ml-2 w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1"></i>
+                </a>
+                <a href="#reserve"
+                    class="px-6 sm:px-8 py-3 sm:py-4 bg-transparent border-2 border-white text-white font-semibold tracking-wide hover:bg-white hover:text-rustic-900 transition-all rounded-sm shadow-lg text-sm sm:text-base">
+                    Book a Table
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- About / Story Teaser -->
+    <section id="about" class="py-24 md:py-32 bg-rustic-50 relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center gap-12 lg:gap-24">
+                <div class="w-full md:w-1/2 fade-in-section">
+                    <div class="relative group">
+                        <!-- Decorative Border -->
+                        <div
+                            class="absolute -top-6 -left-6 w-full h-full border-2 border-embers-600 z-0 hidden md:block transition-transform duration-500 group-hover:translate-x-2 group-hover:translate-y-2">
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                            alt="Chef plating food carefully" loading="lazy"
+                            class="relative z-10 w-full shadow-2xl object-cover h-[500px] rounded-sm transform transition-transform duration-700 group-hover:scale-[1.01]">
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2 fade-in-section">
+                    <h4 class="text-embers-600 font-bold uppercase tracking-widest text-sm mb-3 flex items-center">
+                        <span class="w-8 h-px bg-embers-600 mr-3"></span>Our Philosophy
+                    </h4>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold text-rustic-900 mb-8 leading-tight">Simple
+                        Ingredients, <br>Complex Flavors.</h2>
+                    <p class="text-rustic-700 text-lg leading-relaxed mb-6">
+                        At The Rustic Spoon, we believe that the best food begins with the best ingredients. We partner
+                        directly with local farmers in the valley to bring you produce picked at the peak of freshness.
+                    </p>
+                    <p class="text-rustic-700 text-lg leading-relaxed mb-10">
+                        Our wood-fired oven is the heart of our kitchen, infusing meats and vegetables with a subtle
+                        smokiness that you can't get anywhere else. Join us for a meal that feels like home.
+                    </p>
+                    <div class="flex items-center gap-6 border-l-4 border-embers-500 pl-6 bg-rustic-100/50 py-4">
+                        <div class="text-center">
+                            <p class="font-serif text-3xl text-embers-600 font-bold">10+</p>
+                            <p class="text-xs uppercase tracking-wider text-rustic-500">Years Serving</p>
+                        </div>
+                        <div class="h-10 w-px bg-rustic-300"></div>
+                        <div>
+                            <p class="font-serif text-xl font-bold text-rustic-900">Marco Rossi</p>
+                            <p class="text-sm text-rustic-500 uppercase tracking-wider">Executive Chef</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="py-24 bg-rustic-100 bg-texture text-rustic-900 scroll-mt-20">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <div class="text-center mb-12 fade-in-section">
+                <span class="block w-16 h-1 bg-embers-600 mx-auto mb-6 rounded-full"></span>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold mb-4">The Menu</h2>
+                <p class="text-rustic-600 italic text-lg">Curated daily based on market availability.</p>
+            </div>
+
+            <!-- Menu Filtering Tabs -->
+            <div class="flex flex-wrap justify-center gap-4 mb-16 fade-in-section">
+                <button onclick="filterMenu('all')"
+                    class="tab-btn active px-6 py-2 border border-rustic-400 rounded-full text-rustic-700 font-semibold hover:bg-rustic-200 transition-all uppercase text-sm tracking-wider">All</button>
+                <button onclick="filterMenu('starters')"
+                    class="tab-btn px-6 py-2 border border-rustic-400 rounded-full text-rustic-700 font-semibold hover:bg-rustic-200 transition-all uppercase text-sm tracking-wider">Starters</button>
+                <button onclick="filterMenu('mains')"
+                    class="tab-btn px-6 py-2 border border-rustic-400 rounded-full text-rustic-700 font-semibold hover:bg-rustic-200 transition-all uppercase text-sm tracking-wider">Mains</button>
+                <button onclick="filterMenu('desserts')"
+                    class="tab-btn px-6 py-2 border border-rustic-400 rounded-full text-rustic-700 font-semibold hover:bg-rustic-200 transition-all uppercase text-sm tracking-wider">Desserts</button>
+            </div>
+
+            <!-- Menu Grid -->
+            <div id="menu-grid" class="grid md:grid-cols-2 gap-x-16 gap-y-10 min-h-[500px]">
+
+                <!-- Starters -->
+                <div class="menu-item-card fade-in-section" data-category="starters">
+                    <div class="menu-item group cursor-default">
+                        <div class="flex items-baseline justify-between mb-2">
+                            <h4 class="font-bold text-xl group-hover:text-embers-600 transition-colors">Truffle Arancini
+                            </h4>
+                            <span
+                                class="dots flex-grow mx-4 border-b-2 border-dotted border-rustic-300 relative -top-1 opacity-40 transition-all"></span>
+                            <span class="font-serif text-xl font-semibold text-embers-700">$14</span>
+                        </div>
+                        <p class="text-base text-rustic-600 leading-snug">Risotto balls, black truffle oil, parmesan,
+                            garlic aioli.</p>
+                    </div>
+                </div>
+
+                <div class="menu-item-card fade-in-section" data-category="starters">
+                    <div class="menu-item group cursor-default">
+                        <div class="flex items-baseline justify-between mb-2">
+                            <h4 class="font-bold text-xl group-hover:text-embers-600 transition-colors">Burrata & Fig
+                            </h4>
+                            <span
+                                class="dots flex-grow mx-4 border-b-2 border-dotted border-rustic-300 relative -top-1 opacity-40 transition-all"></span>
+                            <span class="font-serif text-xl font-semibold text-embers-700">$18</span>
+                        </div>
+                        <p class="text-base text-rustic-600 leading-snug">Fresh burrata, mission figs, prosciutto,
+                            balsamic glaze.</p>
+                    </div>
+                </div>
+
+                <div class="menu-item-card fade-in-section" data-category="starters">
+                    <div class="menu-item group cursor-default">
+                        <div class="flex items-baseline justify-between mb-2">
+                            <h4 class="font-bold text-xl group-hover:text-embers-600 transition-colors">Rustic Bread
+                                Board</h4>
+                            <span
+                                class="dots flex-grow mx-4 border-b-2 border-dotted border-rustic-300 relative -top-1 opacity-40 transition-all"></span>
+                            <span class="font-serif text-xl font-semibold text-embers-700">$9</span>
+                        </div>
+                        <p class="text-base text-rustic-600 leading-snug">House-made sourdough, whipped honey butter,
+                            olive tapenade.</p>
+                    </div>
+                </div>
+
+                <!-- Mains -->
+                <div class="menu-item-card fade-in-section" data-category="mains">
+                    <div class="menu-item group cursor-default">
+                        <div class="flex items-baseline justify-between mb-2">
+                            <h4 class="font-bold text-xl group-hover:text-embers-600 transition-colors">Wood-Fired
+                                Ribeye</h4>
+                            <span
+                                class="dots flex-grow mx-4 border-b-2 border-dotted border-rustic-300 relative -top-1 opacity-40 transition-all"></span>
+                            <span class="font-serif text-xl font-semibold text-embers-700">$42</span>
+                        </div>
+                        <p class="text-base text-rustic-600 leading-snug">14oz bone-in ribeye, rosemary potatoes,
+                            charred asparagus.</p>
+                    </div>
+                </div>
+
+                <div class="menu-item-card fade-in-section" data-category="mains">
+                    <div class="menu-item group cursor-default">
+                        <div class="flex items-baseline justify-between mb-2">
+                            <h4 class="font-bold text-xl group-hover:text-embers-600 transition-colors">Pappardelle
+                                Bolognese</h4>
+                            <span
+                                class="dots flex-grow mx-4 border-b-2 border-dotted border-rustic-300 relative -top-1 opacity-40 transition-all"></span>
+                            <span class="font-serif text-xl font-semibold text-embers-700">$26</span>
+                        </div>
+                        <p class="text-base text-rustic-600 leading-snug">Slow-braised beef & pork ragu, fresh egg
+                            pasta, pecorino.</p>
+                    </div>
+                </div>
+
+                <div class="menu-item-card fade-in-section" data-category="mains">
+                    <div class="menu-item group cursor-default">
+                        <div class="flex items-baseline justify-between mb-2">
+                            <h4 class="font-bold text-xl group-hover:text-embers-600 transition-colors">Cedar Plank
+                                Salmon</h4>
+                            <span
+                                class="dots flex-grow mx-4 border-b-2 border-dotted border-rustic-300 relative -top-1 opacity-40 transition-all"></span>
+                            <span class="font-serif text-xl font-semibold text-embers-700">$30</span>
+                        </div>
+                        <p class="text-base text-rustic-600 leading-snug">Maple glazed, quinoa salad, roasted root
+                            vegetables.</p>
+                    </div>
+                </div>
+
+                <div class="menu-item-card fade-in-section" data-category="mains">
+                    <div class="menu-item group cursor-default">
+                        <div class="flex items-baseline justify-between mb-2">
+                            <h4 class="font-bold text-xl group-hover:text-embers-600 transition-colors">Mushroom Risotto
+                            </h4>
+                            <span
+                                class="dots flex-grow mx-4 border-b-2 border-dotted border-rustic-300 relative -top-1 opacity-40 transition-all"></span>
+                            <span class="font-serif text-xl font-semibold text-embers-700">$24</span>
+                        </div>
+                        <p class="text-base text-rustic-600 leading-snug">Porcini & cremini mushrooms, arborio rice,
+                            truffle butter (V).</p>
+                    </div>
+                </div>
+
+                <!-- Desserts -->
+                <div class="menu-item-card fade-in-section" data-category="desserts">
+                    <div class="menu-item group cursor-default">
+                        <div class="flex items-baseline justify-between mb-2">
+                            <h4 class="font-bold text-xl group-hover:text-embers-600 transition-colors">Tiramisu</h4>
+                            <span
+                                class="dots flex-grow mx-4 border-b-2 border-dotted border-rustic-300 relative -top-1 opacity-40 transition-all"></span>
+                            <span class="font-serif text-xl font-semibold text-embers-700">$10</span>
+                        </div>
+                        <p class="text-base text-rustic-600 leading-snug">Espresso soaked fingers, mascarpone cream,
+                            cocoa dust.</p>
+                    </div>
+                </div>
+
+                <div class="menu-item-card fade-in-section" data-category="desserts">
+                    <div class="menu-item group cursor-default">
+                        <div class="flex items-baseline justify-between mb-2">
+                            <h4 class="font-bold text-xl group-hover:text-embers-600 transition-colors">Lemon Ricotta
+                                Cake</h4>
+                            <span
+                                class="dots flex-grow mx-4 border-b-2 border-dotted border-rustic-300 relative -top-1 opacity-40 transition-all"></span>
+                            <span class="font-serif text-xl font-semibold text-embers-700">$11</span>
+                        </div>
+                        <p class="text-base text-rustic-600 leading-snug">Whipped cream, fresh berries, lemon zest.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="text-center mt-16">
+                <!-- Updated Link to use placeholder behavior -->
+                <button onclick="alert('In a real site, this would download a PDF!')"
+                    class="inline-flex items-center text-embers-600 font-bold hover:text-embers-700 transition-colors border-b-2 border-transparent hover:border-embers-700 pb-1 cursor-pointer">
+                    Download Full Menu PDF <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW Private Dining / Events Section -->
+    <section id="events" class="py-24 bg-rustic-800 text-rustic-50 relative overflow-hidden">
+        <div
+            class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1519225421980-715cb0202128?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center opacity-20">
+        </div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-4xl mx-auto text-center fade-in-section">
+                <p class="text-embers-500 font-bold tracking-widest uppercase mb-4">Celebrations & Gatherings</p>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-white mb-6">Private Dining & Events</h2>
+                <p class="text-lg md:text-xl text-rustic-200 mb-10 leading-relaxed">
+                    Host your next special occasion in our exclusive Harvest Room. Perfect for wedding rehearsals,
+                    corporate dinners, and family celebrations. Available for parties of 12 to 50 guests.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-6">
+                    <a href="mailto:events@rusticspoon.com"
+                        class="px-8 py-3 bg-white text-rustic-900 font-bold hover:bg-rustic-100 transition-colors rounded-sm shadow-lg flex items-center justify-center">
+                        <i data-lucide="mail" class="w-5 h-5 mr-2"></i> Inquire via Email
+                    </a>
+                    <button onclick="alert('In a real site, this would download the Event Packet PDF!')"
+                        class="px-8 py-3 border border-white text-white font-bold hover:bg-white/10 transition-colors rounded-sm flex items-center justify-center">
+                        Download Event Packet
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-24 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="font-serif text-4xl font-bold text-center text-rustic-900 mb-16 fade-in-section">Voice of the
+                Guest</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div
+                    class="bg-rustic-50 p-8 rounded-sm shadow-sm fade-in-section border border-rustic-100 h-full flex flex-col">
+                    <div class="flex text-embers-500 mb-4">
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                    </div>
+                    <p class="text-rustic-600 italic mb-6 flex-grow">"The Ribeye was absolute perfection. Best dining
+                        experience I've had in Napa in years. The atmosphere is cozy yet elegant."</p>
+                    <div class="flex items-center">
+                        <div
+                            class="w-10 h-10 bg-rustic-300 rounded-full flex items-center justify-center text-white font-serif font-bold">
+                            SJ</div>
+                        <span class="ml-3 font-bold text-rustic-900">Sarah Jenkins</span>
+                    </div>
+                </div>
+                <!-- Review 2 -->
+                <div
+                    class="bg-rustic-50 p-8 rounded-sm shadow-sm fade-in-section border border-rustic-100 h-full flex flex-col delay-100">
+                    <div class="flex text-embers-500 mb-4">
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                    </div>
+                    <p class="text-rustic-600 italic mb-6 flex-grow">"Incredible service and the wine list is extensive.
+                        A hidden gem that truly respects ingredients."</p>
+                    <div class="flex items-center">
+                        <div
+                            class="w-10 h-10 bg-rustic-300 rounded-full flex items-center justify-center text-white font-serif font-bold">
+                            MR</div>
+                        <span class="ml-3 font-bold text-rustic-900">Michael Ross</span>
+                    </div>
+                </div>
+                <!-- Review 3 -->
+                <div
+                    class="bg-rustic-50 p-8 rounded-sm shadow-sm fade-in-section border border-rustic-100 h-full flex flex-col delay-200">
+                    <div class="flex text-embers-500 mb-4">
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star-half" class="w-5 h-5 fill-current"></i>
+                    </div>
+                    <p class="text-rustic-600 italic mb-6 flex-grow">"Perfect date night spot. The Tiramisu is a
+                        must-try! Make sure to book in advance."</p>
+                    <div class="flex items-center">
+                        <div
+                            class="w-10 h-10 bg-rustic-300 rounded-full flex items-center justify-center text-white font-serif font-bold">
+                            EL</div>
+                        <span class="ml-3 font-bold text-rustic-900">Emma Lewis</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-0">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            <!-- Image 1 -->
+            <div class="relative group h-72 md:h-80 overflow-hidden cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    loading="lazy" alt="Gourmet dish 1"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div
+                    class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <p class="text-white font-serif text-lg tracking-wider border-b border-white pb-1">View Dish</p>
+                </div>
+            </div>
+            <!-- Image 2 -->
+            <div class="relative group h-72 md:h-80 overflow-hidden cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    loading="lazy" alt="Pasta dish"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div
+                    class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <p class="text-white font-serif text-lg tracking-wider border-b border-white pb-1">View Dish</p>
+                </div>
+            </div>
+            <!-- Image 3 -->
+            <div class="relative group h-72 md:h-80 overflow-hidden cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    loading="lazy" alt="Dessert"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div
+                    class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <p class="text-white font-serif text-lg tracking-wider border-b border-white pb-1">View Dish</p>
+                </div>
+            </div>
+            <!-- Image 4 -->
+            <div class="relative group h-72 md:h-80 overflow-hidden cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    loading="lazy" alt="Fried chicken gourmet"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div
+                    class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <p class="text-white font-serif text-lg tracking-wider border-b border-white pb-1">View Dish</p>
+                </div>
+            </div>
+            <!-- Image 5 -->
+            <div class="relative group h-72 md:h-80 overflow-hidden cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    loading="lazy" alt="BBQ"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div
+                    class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <p class="text-white font-serif text-lg tracking-wider border-b border-white pb-1">View Dish</p>
+                </div>
+            </div>
+            <!-- Image 6 -->
+            <div class="relative group h-72 md:h-80 overflow-hidden cursor-pointer">
+                <img src="https://images.pexels.com/photos/34337146/pexels-photo-34337146.jpeg" loading="lazy"
+                    alt="Salad"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div
+                    class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <p class="text-white font-serif text-lg tracking-wider border-b border-white pb-1">View Dish</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservation Section -->
+    <section id="reserve" class="py-24 md:py-32 bg-rustic-900 text-rustic-50 relative">
+        <!-- Decorative SVG Top -->
+        <div class="absolute top-0 left-0 w-full overflow-hidden leading-none rotate-180">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                preserveAspectRatio="none" class="relative block w-[calc(100%+1.3px)] h-[60px] fill-white">
+                <path
+                    d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z">
+                </path>
+            </svg>
+        </div>
+
+        <div class="container mx-auto px-6 max-w-5xl relative z-10">
+            <div
+                class="grid lg:grid-cols-5 gap-10 bg-rustic-800 shadow-2xl rounded-sm border border-rustic-700 overflow-hidden fade-in-section">
+
+                <!-- Info Side -->
+                <div
+                    class="lg:col-span-2 bg-rustic-800 p-8 md:p-10 border-r border-rustic-700 flex flex-col justify-center">
+                    <h2 class="font-serif text-3xl md:text-4xl font-bold mb-6 text-white">Book a Table</h2>
+                    <p class="text-rustic-300 mb-8 leading-relaxed">Join us for an unforgettable evening. Reservations
+                        are highly recommended for weekend dining.</p>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <i data-lucide="phone" class="w-5 h-5 text-embers-500 mr-4 mt-1"></i>
+                            <div>
+                                <h4 class="font-bold text-white text-sm uppercase">Phone</h4>
+                                <p class="text-rustic-400">(555) 987-6543</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i data-lucide="mail" class="w-5 h-5 text-embers-500 mr-4 mt-1"></i>
+                            <div>
+                                <h4 class="font-bold text-white text-sm uppercase">Email</h4>
+                                <p class="text-rustic-400">reservations@rusticspoon.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Side -->
+                <div class="lg:col-span-3 p-8 md:p-12 bg-rustic-800/50">
+                    <form id="reservation-form" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <!-- Date -->
+                            <div class="flex flex-col">
+                                <label
+                                    class="text-xs uppercase tracking-widest text-rustic-400 mb-2 font-bold">Date</label>
+                                <div class="relative">
+                                    <i data-lucide="calendar"
+                                        class="absolute left-3 top-3 w-5 h-5 text-rustic-500 pointer-events-none"></i>
+                                    <input type="date" required
+                                        class="w-full bg-rustic-900 border border-rustic-600 rounded-sm py-3 pl-10 pr-4 text-white focus:outline-none focus:border-embers-600 focus:ring-1 focus:ring-embers-600 transition-colors">
+                                </div>
+                            </div>
+
+                            <!-- Time -->
+                            <div class="flex flex-col">
+                                <label
+                                    class="text-xs uppercase tracking-widest text-rustic-400 mb-2 font-bold">Time</label>
+                                <div class="relative">
+                                    <i data-lucide="clock"
+                                        class="absolute left-3 top-3 w-5 h-5 text-rustic-500 pointer-events-none"></i>
+                                    <select required
+                                        class="w-full bg-rustic-900 border border-rustic-600 rounded-sm py-3 pl-10 pr-4 text-white appearance-none focus:outline-none focus:border-embers-600 focus:ring-1 focus:ring-embers-600 transition-colors cursor-pointer">
+                                        <option value="">Select Time</option>
+                                        <option>5:00 PM</option>
+                                        <option>5:30 PM</option>
+                                        <option>6:00 PM</option>
+                                        <option>6:30 PM</option>
+                                        <option>7:00 PM</option>
+                                        <option>7:30 PM</option>
+                                        <option>8:00 PM</option>
+                                        <option>8:30 PM</option>
+                                        <option>9:00 PM</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <!-- Party Size -->
+                            <div class="flex flex-col">
+                                <label
+                                    class="text-xs uppercase tracking-widest text-rustic-400 mb-2 font-bold">Guests</label>
+                                <div class="relative">
+                                    <i data-lucide="users"
+                                        class="absolute left-3 top-3 w-5 h-5 text-rustic-500 pointer-events-none"></i>
+                                    <select required
+                                        class="w-full bg-rustic-900 border border-rustic-600 rounded-sm py-3 pl-10 pr-4 text-white appearance-none focus:outline-none focus:border-embers-600 focus:ring-1 focus:ring-embers-600 transition-colors cursor-pointer">
+                                        <option value="">Select Guests</option>
+                                        <option>2 People</option>
+                                        <option>3 People</option>
+                                        <option>4 People</option>
+                                        <option>5 People</option>
+                                        <option>6+ People</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- Phone -->
+                            <div class="flex flex-col">
+                                <label
+                                    class="text-xs uppercase tracking-widest text-rustic-400 mb-2 font-bold">Phone</label>
+                                <input type="tel" placeholder="(555) 000-0000" required
+                                    class="w-full bg-rustic-900 border border-rustic-600 rounded-sm py-3 px-4 text-white focus:outline-none focus:border-embers-600 focus:ring-1 focus:ring-embers-600 transition-colors">
+                            </div>
+                        </div>
+
+                        <!-- Name -->
+                        <div class="flex flex-col">
+                            <label class="text-xs uppercase tracking-widest text-rustic-400 mb-2 font-bold">Full
+                                Name</label>
+                            <input type="text" placeholder="John Doe" required
+                                class="w-full bg-rustic-900 border border-rustic-600 rounded-sm py-3 px-4 text-white focus:outline-none focus:border-embers-600 focus:ring-1 focus:ring-embers-600 transition-colors">
+                        </div>
+
+                        <!-- Special Request -->
+                        <div class="flex flex-col">
+                            <label class="text-xs uppercase tracking-widest text-rustic-400 mb-2 font-bold">Special
+                                Requests (Optional)</label>
+                            <textarea rows="2" placeholder="Allergies, anniversary, etc..."
+                                class="w-full bg-rustic-900 border border-rustic-600 rounded-sm py-3 px-4 text-white focus:outline-none focus:border-embers-600 focus:ring-1 focus:ring-embers-600 transition-colors"></textarea>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full bg-embers-600 hover:bg-embers-700 text-white font-serif font-bold py-4 rounded-sm shadow-lg transition-all transform active:scale-[0.98] text-lg mt-2">
+                            Confirm Request
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section id="location" class="py-0 relative h-96 w-full bg-gray-200">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d100939.98555098464!2d-122.29760454144691!3d38.29753812412469!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085066922a96931%3A0x6e9a66d66e7465c4!2sNapa%20Valley%2C%20CA!5e0!3m2!1sen!2sus!4v1684347289562!5m2!1sen!2sus"
+            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade" class="map-frame" title="Restaurant Location Map">
+        </iframe>
+        <!-- Map Overlay Title -->
+        <div class="absolute top-6 left-6 md:left-20 bg-white p-4 shadow-lg rounded-sm max-w-xs pointer-events-none">
+            <h4 class="font-serif font-bold text-rustic-900 text-lg">Visit Us</h4>
+            <p class="text-sm text-rustic-600">123 Harvest Lane, Napa Valley</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-rustic-400 pt-20 pb-10 border-t border-rustic-800">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-12 text-center md:text-left">
+                <!-- Brand -->
+                <div class="md:col-span-1">
+                    <h3 class="font-serif text-2xl text-white mb-6">The Rustic Spoon</h3>
+                    <p class="mb-6 leading-relaxed text-sm">Authentic flavors, warm atmosphere, and memories made around
+                        the table.</p>
+                    <div class="flex justify-center md:justify-start space-x-4">
+                        <a href="#" class="hover:text-white transition-colors p-2 rounded-full hover:bg-white/10"><i
+                                data-lucide="facebook" class="w-5 h-5"></i></a>
+                        <a href="#" class="hover:text-white transition-colors p-2 rounded-full hover:bg-white/10"><i
+                                data-lucide="instagram" class="w-5 h-5"></i></a>
+                        <a href="#" class="hover:text-white transition-colors p-2 rounded-full hover:bg-white/10"><i
+                                data-lucide="twitter" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-widest mb-6 text-sm">Explore</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#about" class="hover:text-embers-500 transition-colors">Our Story</a></li>
+                        <li><a href="#menu" class="hover:text-embers-500 transition-colors">Seasonal Menu</a></li>
+                        <li><a href="#events" class="hover:text-embers-500 transition-colors">Private Dining</a></li>
+                        <li><button onclick="openModal('gift')" class="hover:text-embers-500 transition-colors">Gift
+                                Cards</button></li>
+                        <li><button onclick="openModal('careers')"
+                                class="hover:text-embers-500 transition-colors">Careers / Jobs</button></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-widest mb-6 text-sm">Visit Us</h4>
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex items-start justify-center md:justify-start">
+                            <i data-lucide="map-pin" class="w-5 h-5 mr-3 mt-1 flex-shrink-0 text-embers-600"></i>
+                            <span>123 Harvest Lane<br>Napa Valley, CA 94558</span>
+                        </li>
+                        <li class="flex items-center justify-center md:justify-start">
+                            <i data-lucide="phone" class="w-5 h-5 mr-3 flex-shrink-0 text-embers-600"></i>
+                            <span>(555) 987-6543</span>
+                        </li>
+                        <li class="flex items-center justify-center md:justify-start">
+                            <i data-lucide="mail" class="w-5 h-5 mr-3 flex-shrink-0 text-embers-600"></i>
+                            <span>hello@rusticspoon.com</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-widest mb-6 text-sm">Newsletter</h4>
+                    <p class="text-xs mb-4">Subscribe for seasonal updates and exclusive offers.</p>
+                    <form onsubmit="event.preventDefault(); this.reset(); alert('Thanks for subscribing!');"
+                        class="flex flex-col gap-2">
+                        <input type="email" placeholder="Your Email Address" required
+                            class="bg-white/10 border border-white/20 rounded-sm py-2 px-3 text-white text-sm focus:outline-none focus:border-embers-600 transition-colors">
+                        <button
+                            class="bg-embers-600 hover:bg-embers-700 text-white font-bold py-2 text-sm rounded-sm transition-colors uppercase tracking-wide">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+
+            <div
+                class="border-t border-rustic-800/50 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-rustic-500">
+                <p>&copy; 2024 The Rustic Spoon. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <button onclick="openModal('privacy')" class="hover:text-white transition-colors">Privacy
+                        Policy</button>
+                    <button onclick="openModal('terms')" class="hover:text-white transition-colors">Terms of
+                        Service</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top"
+        class="fixed bottom-6 right-6 bg-embers-600 hover:bg-embers-700 text-white p-3 rounded-full shadow-lg z-40 transition-all duration-300 opacity-0 translate-y-10 focus:outline-none"
+        aria-label="Back to Top">
+        <i data-lucide="arrow-up" class="w-6 h-6"></i>
+    </button>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-banner"
+        class="fixed bottom-0 left-0 w-full bg-rustic-900 text-white p-4 z-50 transform translate-y-full transition-transform duration-500 shadow-lg border-t border-rustic-700">
+        <div class="container mx-auto max-w-6xl flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="text-sm text-rustic-300 text-center md:text-left">We use cookies to enhance your dining experience
+                and analyze our traffic. By continuing to visit this site you agree to our use of cookies.</p>
+            <div class="flex gap-4">
+                <button onclick="acceptCookies()"
+                    class="px-6 py-2 bg-embers-600 text-white font-bold rounded-sm text-sm hover:bg-embers-700 transition-colors">Accept</button>
+                <button onclick="acceptCookies()"
+                    class="px-6 py-2 bg-transparent border border-rustic-500 text-rustic-300 font-bold rounded-sm text-sm hover:text-white hover:border-white transition-colors">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Modal -->
+    <div id="notification"
+        class="fixed bottom-6 left-6 right-6 md:right-auto md:w-96 bg-white border-l-4 border-embers-600 shadow-2xl p-6 rounded-sm z-50 transform translate-y-[200%] transition-transform duration-500">
+        <div class="flex items-start">
+            <div class="bg-green-100 p-2 rounded-full mr-4">
+                <i data-lucide="check" class="text-green-600 w-6 h-6"></i>
+            </div>
+            <div class="flex-grow">
+                <h4 class="font-bold text-rustic-900 mb-1">Request Received!</h4>
+                <p class="text-sm text-rustic-600">We've received your reservation request. We'll send a confirmation
+                    email shortly.</p>
+            </div>
+            <button id="close-notification" class="ml-2 text-gray-400 hover:text-gray-600">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+        </div>
+        <!-- Progress Bar -->
+        <div class="absolute bottom-0 left-0 h-1 bg-green-500 w-full animate-[shrink_5s_linear_forwards]"></div>
+    </div>
+
+    <!-- UNIVERSAL MODAL WRAPPER -->
+    <div id="universal-modal" class="modal fixed inset-0 z-[60] flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeModal()"></div>
+        <div
+            class="modal-content relative bg-white w-full max-w-2xl max-h-[80vh] overflow-y-auto rounded-sm shadow-2xl p-8 md:p-12">
+            <button onclick="closeModal()"
+                class="absolute top-4 right-4 text-gray-400 hover:text-gray-900 transition-colors p-2">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <!-- Dynamic Content Container -->
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // --- Navbar Scroll Effect ---
+        const navbar = document.getElementById('navbar');
+        const backToTopBtn = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.remove('bg-gradient-to-b', 'from-black/60', 'to-transparent', 'py-6');
+                navbar.classList.add('bg-rustic-900/95', 'shadow-md', 'py-3', 'backdrop-blur-sm');
+                backToTopBtn.classList.remove('opacity-0', 'translate-y-10');
+            } else {
+                navbar.classList.add('bg-gradient-to-b', 'from-black/60', 'to-transparent', 'py-6');
+                navbar.classList.remove('bg-rustic-900/95', 'shadow-md', 'py-3', 'backdrop-blur-sm');
+                backToTopBtn.classList.add('opacity-0', 'translate-y-10');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // --- Mobile Menu Logic ---
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        let isMenuOpen = false;
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('translate-x-full');
+                mobileMenuBtn.innerHTML = '<i data-lucide="x" class="w-8 h-8"></i>';
+                document.body.style.overflow = 'hidden';
+            } else {
+                mobileMenu.classList.add('translate-x-full');
+                mobileMenuBtn.innerHTML = '<i data-lucide="menu" class="w-8 h-8"></i>';
+                document.body.style.overflow = '';
+            }
+            lucide.createIcons();
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (isMenuOpen) toggleMenu();
+            });
+        });
+
+        // --- Menu Filtering Logic ---
+        function filterMenu(category) {
+            const items = document.querySelectorAll('.menu-item-card');
+            const buttons = document.querySelectorAll('.tab-btn');
+
+            buttons.forEach(btn => {
+                if (btn.innerText.toLowerCase() === category) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            items.forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(10px)';
+
+                setTimeout(() => {
+                    if (category === 'all' || item.dataset.category === category) {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'translateY(0)';
+                        }, 50);
+                    } else {
+                        item.style.display = 'none';
+                    }
+                }, 300);
+            });
+        }
+
+        // --- Intersection Observer for Scroll Animations ---
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // --- Reservation Form Handling ---
+        const form = document.getElementById('reservation-form');
+        const notification = document.getElementById('notification');
+        const closeNotif = document.getElementById('close-notification');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const btn = form.querySelector('button');
+            const originalText = btn.innerText;
+            btn.innerHTML = '<span class="animate-pulse">Processing Request...</span>';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                form.reset();
+                btn.innerText = originalText;
+                btn.disabled = false;
+                notification.classList.remove('translate-y-[200%]');
+                setTimeout(hideNotification, 5000);
+            }, 1500);
+        });
+
+        function hideNotification() {
+            notification.classList.add('translate-y-[200%]');
+        }
+
+        closeNotif.addEventListener('click', hideNotification);
+
+        // --- MODAL SYSTEM LOGIC ---
+        const modal = document.getElementById('universal-modal');
+        const modalBody = document.getElementById('modal-body');
+
+        const modalContentData = {
+            'privacy': `
+                <h2 class="font-serif text-3xl font-bold mb-4">Privacy Policy</h2>
+                <p class="text-rustic-600 mb-4">Last updated: October 2024</p>
+                <div class="space-y-4 text-gray-700 leading-relaxed">
+                    <p>At The Rustic Spoon, we value your privacy. This policy explains how we handle your personal information.</p>
+                    <h3 class="font-bold text-lg">1. Information We Collect</h3>
+                    <p>We collect information you provide directly to us, such as when you make a reservation, including your name, email address, and phone number.</p>
+                    <h3 class="font-bold text-lg">2. How We Use Information</h3>
+                    <p>We use this information to manage your bookings and communicate with you regarding your dining experience.</p>
+                </div>
+            `,
+            'terms': `
+                <h2 class="font-serif text-3xl font-bold mb-4">Terms of Service</h2>
+                <div class="space-y-4 text-gray-700 leading-relaxed">
+                    <p>By using our website, you agree to these terms.</p>
+                    <h3 class="font-bold text-lg">Reservations</h3>
+                    <p>Reservations are subject to availability. We reserve the right to cancel or modify reservations in unforeseen circumstances.</p>
+                    <h3 class="font-bold text-lg">Cancellations</h3>
+                    <p>Please provide at least 24 hours notice for cancellations of parties larger than 6.</p>
+                </div>
+            `,
+            'gift': `
+                <h2 class="font-serif text-3xl font-bold mb-4">Gift Cards</h2>
+                <p class="text-lg text-rustic-700 mb-6">Give the gift of a rustic dining experience.</p>
+                <div class="bg-rustic-50 p-6 rounded-sm border border-rustic-200 mb-6">
+                    <h3 class="font-bold text-lg mb-2">Digital Gift Cards</h3>
+                    <p class="mb-4 text-sm">Sent instantly via email. Perfect for last-minute gifts.</p>
+                    <button onclick="alert('Redirecting to secure payment...')" class="w-full bg-embers-600 text-white font-bold py-3 rounded-sm hover:bg-embers-700 transition-colors">Purchase Digital Card</button>
+                </div>
+                <p class="text-sm text-center text-gray-500">Physical gift cards are available for purchase at the restaurant.</p>
+            `,
+            'careers': `
+                <h2 class="font-serif text-3xl font-bold mb-4">Join Our Team</h2>
+                <p class="text-lg text-rustic-700 mb-6">We are always looking for passionate individuals.</p>
+                <div class="space-y-4">
+                    <div class="border-b border-gray-200 pb-4">
+                        <h4 class="font-bold text-lg">Line Cook</h4>
+                        <p class="text-sm text-gray-600 mb-2">Full Time • Evenings</p>
+                        <button onclick="window.location.href='mailto:jobs@rusticspoon.com'" class="text-embers-600 font-bold text-sm hover:underline">Apply Now</button>
+                    </div>
+                    <div class="border-b border-gray-200 pb-4">
+                        <h4 class="font-bold text-lg">Server</h4>
+                        <p class="text-sm text-gray-600 mb-2">Part Time • Weekends</p>
+                        <button onclick="window.location.href='mailto:jobs@rusticspoon.com'" class="text-embers-600 font-bold text-sm hover:underline">Apply Now</button>
+                    </div>
+                </div>
+            `
+        };
+
+        function openModal(type) {
+            modalBody.innerHTML = modalContentData[type] || '<p>Content not found.</p>';
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // --- Cookie Banner Logic ---
+        const cookieBanner = document.getElementById('cookie-banner');
+
+        // Check if user already accepted
+        if (!localStorage.getItem('cookiesAccepted')) {
+            setTimeout(() => {
+                cookieBanner.classList.remove('translate-y-full');
+            }, 2000); // Show after 2 seconds
+        }
+
+        function acceptCookies() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookieBanner.classList.add('translate-y-full');
+        }
+
+        // Add CSS for shrink animation dynamically
+        const styleSheet = document.createElement("style");
+        styleSheet.innerText = `
+            @keyframes shrink {
+                from { width: 100%; }
+                to { width: 0%; }
+            }
+        `;
+        document.head.appendChild(styleSheet);
+
+    </script>
+</body>
+
+</html>
