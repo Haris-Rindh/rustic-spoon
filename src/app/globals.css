@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+@theme {
+  --color-rustic-50: #f9f8f6;
+  --color-rustic-100: #efebe5;
+  --color-rustic-200: #e0d8cc;
+  --color-rustic-300: #c8bba8;
+  --color-rustic-400: #af9b82;
+  --color-rustic-500: #967d60;
+  --color-rustic-600: #7d634b;
+  --color-rustic-700: #634d3b;
+  --color-rustic-800: #524034;
+  --color-rustic-900: #43362e;
+
+  --color-embers-500: #d97706;
+  --color-embers-600: #c2410c;
+  --color-embers-700: #9a3412;
+
+  --font-sans: 'Lato', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+
+  --background-image-hero-pattern: url('https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+  --background-image-texture: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%239C92AC' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+
+  --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+@layer base {
+  body {
+    @apply font-sans text-rustic-900 bg-rustic-50 antialiased selection:bg-embers-600 selection:text-white flex flex-col min-h-screen;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: var(--color-rustic-100);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--color-rustic-500);
+    border-radius: 5px;
+    border: 2px solid var(--color-rustic-100);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-rustic-600);
+}
+
+/* Menu Dot Leader Animation */
+.menu-item:hover .dots {
+    opacity: 0.8;
+    border-bottom-color: var(--color-embers-600);
+}
+
+/* Active Tab Styling */
+.tab-btn.active {
+    background-color: var(--color-embers-600);
+    color: white;
+    border-color: var(--color-embers-600);
+}
+
+/* Fade In Animation - will implement with Framer Motion or Intersection Observer, but keeping CSS fallback */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    will-change: opacity, transform;
+}
+
+.fade-in-section.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+/* Map Grayscale Hover Effect */
+.map-frame {
+    filter: grayscale(100%);
+    transition: filter 0.5s ease;
+}
+
+.map-frame:hover {
+    filter: grayscale(0%);
+}
+
+/* Modal Transitions */
+.modal {
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.modal.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.modal-content {
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.modal.active .modal-content {
+    transform: scale(1);
+}

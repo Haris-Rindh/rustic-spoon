@@ -1,60 +1,36 @@
-The Rustic Spoon 🥄
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-A premium, mobile-first restaurant website designed for high-end hospitality brands. This project demonstrates a fully responsive, single-page application built with modern web technologies, focusing on performance, aesthetics, and user conversion.
+## Getting Started
 
-🚀 Live Demo
+First, run the development server:
 
-[https://rustic-spoon-nu.vercel.app/]
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-✨ Key Features
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-Mobile-First Architecture: Optimized for touch devices with a custom responsive layout that scales perfectly to 4K desktops.
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-Interactive Menu System: JavaScript-powered tabbed filtering (Starters, Mains, Desserts) for seamless browsing without page reloads.
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-Smart Navigation: Sticky navbar with scroll-aware transparency and glassmorphism effects.
+## Learn More
 
-Universal Modal System: Integrated pop-ups for Privacy Policy, Terms of Service, Gift Cards, and Careers to keep users engaged on the main page.
+To learn more about Next.js, take a look at the following resources:
 
-Conversion-Ready: Custom reservation form with date/time pickers, visual feedback, and "Private Dining" lead generation.
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-Performance: Zero-bloat implementation achieving high Lighthouse scores.
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-🛠️ Tech Stack
+## Deploy on Vercel
 
-HTML5: Semantic structure for better SEO and accessibility.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Tailwind CSS: Utility-first CSS framework for rapid, custom styling and responsiveness.
-
-Vanilla JavaScript: Lightweight logic for modals, mobile menus, and filtering (No jQuery/heavy frameworks).
-
-Lucide Icons: Lightweight, crisp SVG icons.
-
-📂 Project Structure
-
-/
-├── index.html      # The core application (HTML + embedded CSS/JS)
-└── README.md       # Project documentation
-
-
-⚡ How to Run
-
-Clone the repository:
-
-git clone [https://github.com/Haris-Rindh/rustic-spoon.git]
-
-
-Navigate to the project directory.
-
-Open index.html in any modern web browser.
-
-📸 Design Details
-
-Typography: Playfair Display (Serif) for headings, Lato (Sans) for body text.
-
-Color Palette: Warm Earth Tones (Stone, Burnt Orange/Ember, Deep Brown).
-
-Imagery: Parallax scrolling hero section with overlay protection for text readability.
-
-
-© 2024 The Rustic Spoon Project. Designed & Developed by Haris Rindh.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
