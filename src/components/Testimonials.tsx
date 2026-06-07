@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { testimonialsData } from '../data';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -16,18 +16,15 @@ export default function Testimonials() {
   return (
     <section
       id="testimonials"
-      className="relative py-32 overflow-hidden"
-      style={{ background: 'linear-gradient(135deg, #43362e 0%, #2a211b 50%, #43362e 100%)' }}
+      className="py-32 bg-rustic-200 bg-texture relative overflow-hidden scroll-mt-20"
     >
-      {/* Subtle pattern overlay */}
-      <div className="absolute inset-0 bg-texture opacity-20" />
-
-      {/* Giant decorative quote mark */}
-      <div className="absolute top-8 left-1/2 -translate-x-1/2 text-embers-600/10 select-none pointer-events-none">
-        <span className="font-serif text-[220px] leading-none">"</span>
+      {/* Decorative oversized quote — adapts to light bg */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 select-none pointer-events-none text-rustic-400/20">
+        <span className="font-serif text-[280px] leading-none">"</span>
       </div>
 
       <div className="container mx-auto px-6 max-w-5xl relative z-10">
+
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -36,11 +33,24 @@ export default function Testimonials() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-16"
         >
-          <p className="text-embers-500 font-semibold tracking-[0.3em] uppercase text-xs mb-4">What Our Guests Say</p>
-          <h2 className="font-serif text-5xl md:text-6xl font-bold text-white">Voices of the Table</h2>
+          {/* Eyebrow */}
+          <p className="text-embers-600 font-semibold tracking-[0.3em] uppercase text-xs mb-4">
+            What Our Guests Say
+          </p>
+
+          {/* Section divider ornament */}
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <span className="flex-1 max-w-[80px] h-px bg-gradient-to-r from-transparent to-embers-600/50" />
+            <span className="text-embers-600 text-xl">✦</span>
+            <span className="flex-1 max-w-[80px] h-px bg-gradient-to-l from-transparent to-embers-600/50" />
+          </div>
+
+          <h2 className="font-serif text-5xl md:text-6xl font-bold text-rustic-900">
+            Voices of the Table
+          </h2>
         </motion.div>
 
-        {/* Testimonial card carousel */}
+        {/* Carousel */}
         <div className="relative">
           <AnimatePresence mode="wait">
             <motion.div
@@ -48,49 +58,63 @@ export default function Testimonials() {
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -40 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="text-center px-4 md:px-16"
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              className="text-center px-4 md:px-20"
             >
               {/* Stars */}
-              <div className="flex justify-center text-embers-400 mb-8 gap-1">
+              <div className="flex justify-center gap-1 mb-8">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star
                     key={i}
-                    className={`w-5 h-5 ${i < Math.floor(review.rating) ? 'fill-embers-400' : 'fill-transparent stroke-embers-400'}`}
+                    className={`w-5 h-5 text-embers-500 ${
+                      i < Math.floor(review.rating) ? 'fill-embers-500' : 'fill-transparent'
+                    }`}
                   />
                 ))}
               </div>
 
-              <blockquote className="font-serif text-2xl md:text-3xl lg:text-4xl text-white/90 leading-relaxed italic mb-10">
+              {/* Quote text — dark on the light background */}
+              <blockquote className="font-serif text-2xl md:text-3xl lg:text-4xl text-rustic-800 leading-relaxed italic mb-10">
                 "{review.text}"
               </blockquote>
 
-              <div className="flex flex-col items-center gap-2">
-                <div className="w-14 h-14 rounded-full bg-embers-600/30 border-2 border-embers-500/40 flex items-center justify-center font-serif text-xl font-bold text-embers-400">
+              {/* Author */}
+              <div className="flex flex-col items-center gap-3">
+                {/* Avatar circle */}
+                <div className="w-14 h-14 rounded-full bg-embers-600 flex items-center justify-center font-serif text-xl font-bold text-white shadow-md shadow-embers-600/30">
                   {review.authorInitials}
                 </div>
-                <p className="font-bold text-white tracking-wide">{review.authorName}</p>
-                <p className="text-white/40 text-sm uppercase tracking-widest">Verified Diner</p>
+                <p className="font-bold text-rustic-900 tracking-wide text-lg">
+                  {review.authorName}
+                </p>
+                <p className="text-rustic-500 text-xs uppercase tracking-widest font-semibold">
+                  Verified Diner
+                </p>
               </div>
             </motion.div>
           </AnimatePresence>
 
-          {/* Controls */}
-          <div className="flex justify-center items-center gap-8 mt-12">
+          {/* Navigation controls — styled for light background */}
+          <div className="flex justify-center items-center gap-8 mt-14">
             <button
               onClick={prev}
-              className="w-12 h-12 border border-white/20 rounded-full flex items-center justify-center text-white/60 hover:border-embers-500 hover:text-embers-400 transition-all duration-300"
+              aria-label="Previous testimonial"
+              className="w-12 h-12 border-2 border-rustic-400 rounded-full flex items-center justify-center text-rustic-600 hover:border-embers-600 hover:text-embers-600 hover:bg-embers-600/5 transition-all duration-300"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
 
-            <div className="flex gap-2">
+            {/* Dot indicators */}
+            <div className="flex gap-2 items-center">
               {testimonialsData.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setCurrent(i)}
+                  aria-label={`Go to testimonial ${i + 1}`}
                   className={`transition-all duration-300 rounded-full ${
-                    i === current ? 'w-8 h-2 bg-embers-500' : 'w-2 h-2 bg-white/30 hover:bg-white/60'
+                    i === current
+                      ? 'w-8 h-2.5 bg-embers-600'
+                      : 'w-2.5 h-2.5 bg-rustic-400 hover:bg-rustic-600'
                   }`}
                 />
               ))}
@@ -98,7 +122,8 @@ export default function Testimonials() {
 
             <button
               onClick={next}
-              className="w-12 h-12 border border-white/20 rounded-full flex items-center justify-center text-white/60 hover:border-embers-500 hover:text-embers-400 transition-all duration-300"
+              aria-label="Next testimonial"
+              className="w-12 h-12 border-2 border-rustic-400 rounded-full flex items-center justify-center text-rustic-600 hover:border-embers-600 hover:text-embers-600 hover:bg-embers-600/5 transition-all duration-300"
             >
               <ChevronRight className="w-5 h-5" />
             </button>

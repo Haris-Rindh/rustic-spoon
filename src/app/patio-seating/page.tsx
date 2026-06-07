@@ -4,7 +4,7 @@ import Footer from '../../components/Footer';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Wind, Sunset, TreePine } from 'lucide-react';
+import { ArrowRight, Wind, Sunrise, TreePine } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Patio Seating | The Rustic Spoon — Al Fresco Dining Napa Valley',
@@ -47,7 +47,7 @@ export default function PatioSeatingPage() {
                 {[
                   { icon: Wind,    label: 'Setting',   val: 'Open Air' },
                   { icon: TreePine, label: 'Views',    val: 'Vineyard' },
-                  { icon: Sunset,  label: 'Best Time', val: 'At Sunset' },
+                  { icon: Sunrise,  label: 'Best Time', val: 'At Sunset' },
                 ].map(({ icon: Icon, label, val }) => (
                   <div key={label} className="text-center">
                     <Icon className="w-6 h-6 text-embers-600 mx-auto mb-2" />

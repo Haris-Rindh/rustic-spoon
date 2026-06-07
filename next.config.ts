@@ -20,10 +20,16 @@ const securityHeaders = [
   {
     key: 'Referrer-Policy',
     value: 'origin-when-cross-origin'
+  },
+  {
+    key: 'Permissions-Policy',
+    value: 'camera=(), microphone=(), geolocation=()'
   }
 ];
 
 const nextConfig: NextConfig = {
+  // Remove --webpack flag for production builds on Vercel
+  // (webpack flag is only needed locally on Windows)
   images: {
     remotePatterns: [
       {
