@@ -2,61 +2,79 @@ export const menuData = {
   starters: [
     {
       id: 1,
+      slug: "truffle-arancini",
       name: "Truffle Arancini",
       price: "$14",
-      description: "Risotto balls, black truffle oil, parmesan, garlic aioli."
+      description: "Risotto balls, black truffle oil, parmesan, garlic aioli.",
+      image: "https://images.unsplash.com/photo-1628198305001-c85d8d085df7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
       id: 2,
+      slug: "burrata-fig",
       name: "Burrata & Fig",
       price: "$18",
-      description: "Fresh burrata, mission figs, prosciutto, balsamic glaze."
+      description: "Fresh burrata, mission figs, prosciutto, balsamic glaze.",
+      image: "https://images.unsplash.com/photo-1608897013039-887f214b985c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
       id: 3,
+      slug: "rustic-bread-board",
       name: "Rustic Bread Board",
       price: "$9",
-      description: "House-made sourdough, whipped honey butter, olive tapenade."
+      description: "House-made sourdough, whipped honey butter, olive tapenade.",
+      image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     }
   ],
   mains: [
     {
       id: 4,
+      slug: "wood-fired-ribeye",
       name: "Wood-Fired Ribeye",
       price: "$42",
-      description: "14oz bone-in ribeye, rosemary potatoes, charred asparagus."
+      description: "14oz bone-in ribeye, rosemary potatoes, charred asparagus.",
+      image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
       id: 5,
+      slug: "pappardelle-bolognese",
       name: "Pappardelle Bolognese",
       price: "$26",
-      description: "Slow-braised beef & pork ragu, fresh egg pasta, pecorino."
+      description: "Slow-braised beef & pork ragu, fresh egg pasta, pecorino.",
+      image: "https://images.unsplash.com/photo-1626844131082-256783844137?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
       id: 6,
+      slug: "cedar-plank-salmon",
       name: "Cedar Plank Salmon",
       price: "$30",
-      description: "Maple glazed, quinoa salad, roasted root vegetables."
+      description: "Maple glazed, quinoa salad, roasted root vegetables.",
+      image: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
       id: 7,
+      slug: "mushroom-risotto",
       name: "Mushroom Risotto",
       price: "$24",
-      description: "Porcini & cremini mushrooms, arborio rice, truffle butter (V)."
+      description: "Porcini & cremini mushrooms, arborio rice, truffle butter (V).",
+      image: "https://images.unsplash.com/photo-1633337474564-1d8be821abec?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     }
   ],
   desserts: [
     {
       id: 8,
+      slug: "tiramisu",
       name: "Tiramisu",
       price: "$10",
-      description: "Espresso soaked fingers, mascarpone cream, cocoa dust."
+      description: "Espresso soaked fingers, mascarpone cream, cocoa dust.",
+      image: "https://images.unsplash.com/photo-1571115177098-24c42de1bd15?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
       id: 9,
+      slug: "lemon-ricotta-cake",
       name: "Lemon Ricotta Cake",
       price: "$11",
-      description: "Whipped cream, fresh berries, lemon zest."
+      description: "Whipped cream, fresh berries, lemon zest.",
+      image: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     }
   ]
 };
@@ -72,7 +90,7 @@ export const testimonialsData = [
   {
     id: 2,
     rating: 5,
-    text: "Incredible service and the wine list is extensive. A hidden gem that truly respects ingredients.",
+    text: "Incredible service and the beverage menu is exquisite. A hidden gem that truly respects ingredients.",
     authorInitials: "MR",
     authorName: "Michael Ross"
   },

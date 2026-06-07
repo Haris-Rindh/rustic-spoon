@@ -12,6 +12,9 @@
   --color-rustic-800: #524034;
   --color-rustic-900: #43362e;
 
+  --color-embers-50:  #fff7ed;
+  --color-embers-100: #ffedd5;
+  --color-embers-400: #fb923c;
   --color-embers-500: #d97706;
   --color-embers-600: #c2410c;
   --color-embers-700: #9a3412;
@@ -19,89 +22,178 @@
   --font-sans: 'Lato', sans-serif;
   --font-serif: 'Playfair Display', serif;
 
-  --background-image-hero-pattern: url('https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
-  --background-image-texture: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%239C92AC' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
-
-  --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  --background-image-hero-pattern: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+  --background-image-texture: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%239C92AC' fill-opacity='0.03' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
 }
 
+/* ─── Base ─── */
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
   body {
-    @apply font-sans text-rustic-900 bg-rustic-50 antialiased selection:bg-embers-600 selection:text-white flex flex-col min-h-screen;
+    @apply font-sans text-rustic-900 bg-rustic-50 antialiased selection:bg-embers-600 selection:text-white;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-    width: 10px;
-}
-::-webkit-scrollbar-track {
-    background: var(--color-rustic-100);
-}
+/* ─── Custom scrollbar ─── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--color-rustic-100); }
 ::-webkit-scrollbar-thumb {
-    background: var(--color-rustic-500);
-    border-radius: 5px;
-    border: 2px solid var(--color-rustic-100);
+  background: linear-gradient(180deg, var(--color-embers-600), var(--color-rustic-600));
+  border-radius: 4px;
+  border: 2px solid var(--color-rustic-100);
 }
-::-webkit-scrollbar-thumb:hover {
-    background: var(--color-rustic-600);
+::-webkit-scrollbar-thumb:hover { background: var(--color-embers-700); }
+
+/* ─── Page Loader ─── */
+.page-loader {
+  position: fixed;
+  inset: 0;
+  background: var(--color-rustic-900);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.loader-text {
+  font-family: var(--font-serif);
+  color: white;
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  letter-spacing: 0.15em;
 }
 
-/* Menu Dot Leader Animation */
+/* ─── Menu Items ─── */
 .menu-item:hover .dots {
-    opacity: 0.8;
-    border-bottom-color: var(--color-embers-600);
+  opacity: 0.8;
+  border-bottom-color: var(--color-embers-600);
 }
 
-/* Active Tab Styling */
-.tab-btn.active {
-    background-color: var(--color-embers-600);
-    color: white;
-    border-color: var(--color-embers-600);
+/* ─── Nav Link Underline Grow ─── */
+.nav-link-underline {
+  position: relative;
+}
+.nav-link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background-color: var(--color-embers-500);
+  transition: width 0.3s ease;
+}
+.nav-link-underline:hover::after,
+.nav-link-underline.active::after {
+  width: 100%;
 }
 
-/* Fade In Animation - will implement with Framer Motion or Intersection Observer, but keeping CSS fallback */
-.fade-in-section {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    will-change: opacity, transform;
+/* ─── Smooth image zoom on hover ─── */
+.img-zoom img {
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.img-zoom:hover img {
+  transform: scale(1.06);
 }
 
-.fade-in-section.is-visible {
-    opacity: 1;
-    transform: none;
+/* ─── Gradient text ─── */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-embers-500), var(--color-embers-700));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* Map Grayscale Hover Effect */
-.map-frame {
-    filter: grayscale(100%);
-    transition: filter 0.5s ease;
+/* ─── Glassmorphism card ─── */
+.glass-card {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.15);
 }
 
-.map-frame:hover {
-    filter: grayscale(0%);
+/* ─── Section divider ornament ─── */
+.section-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.section-ornament::before,
+.section-ornament::after {
+  content: '';
+  flex: 1;
+  max-width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-embers-600));
+}
+.section-ornament::after {
+  background: linear-gradient(90deg, var(--color-embers-600), transparent);
 }
 
-/* Modal Transitions */
-.modal {
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
+/* ─── Dish card hover ─── */
+.dish-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.dish-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
+  z-index: 1;
+  transition: opacity 0.4s ease;
+}
+.dish-card:hover::before {
+  opacity: 1.2;
+}
+.dish-card .dish-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  padding: 1.5rem;
+  transform: translateY(8px);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.dish-card:hover .dish-info {
+  transform: translateY(0);
 }
 
-.modal.active {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
+/* ─── Reservation step indicator ─── */
+.step-indicator {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
 }
 
-.modal-content {
-    transform: scale(0.95);
-    transition: transform 0.3s ease;
+/* ─── Fade-up keyframe ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+  animation: fadeUp 0.7s ease forwards;
 }
 
-.modal.active .modal-content {
-    transform: scale(1);
+/* ─── Shimmer loading ─── */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.shimmer {
+  background: linear-gradient(90deg, #efebe5 25%, #e0d8cc 50%, #efebe5 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.5s infinite;
 }
