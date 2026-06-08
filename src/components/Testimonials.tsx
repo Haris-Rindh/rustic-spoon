@@ -2,10 +2,23 @@
 
 import React, { useState } from 'react';
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
-import { testimonialsData } from '../data';
+import { testimonialsData as staticTestimonialsData } from '../data';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function Testimonials() {
+interface TestimonialItem {
+  id: number;
+  rating: number;
+  text: string;
+  authorInitials: string;
+  authorName: string;
+}
+
+interface TestimonialsProps {
+  reviews?: TestimonialItem[];
+}
+
+export default function Testimonials({ reviews }: TestimonialsProps) {
+  const testimonialsData = reviews || staticTestimonialsData;
   const [current, setCurrent] = useState(0);
 
   const prev = () => setCurrent((c) => (c === 0 ? testimonialsData.length - 1 : c - 1));

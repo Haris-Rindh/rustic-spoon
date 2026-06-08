@@ -1,5 +1,5 @@
 import React from 'react';
-import { menuData } from '../../../data';
+import { getDbData } from '../../../lib/db';
 import { notFound } from 'next/navigation';
 import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
@@ -10,14 +10,14 @@ import type { Metadata, ResolvingMetadata } from 'next';
 
 type Props = { params: Promise<{ slug: string }> };
 
-const allItems = () => [...menuData.starters, ...menuData.mains, ...menuData.desserts];
-const getCategory = (id: number) =>
-  menuData.starters.find(i => i.id === id) ? 'Starter' :
-  menuData.mains.find(i => i.id === id)    ? 'Main Course' : 'Dessert';
+export const revalidate = 0;
 
 export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
   const { slug } = await params;
-  const dish = allItems().find(i => i.slug === slug);
+  const db = await getDbData();
+  const menu = db.menu;
+  const allItems = [...menu.starters, ...menu.mains, ...menu.desserts];
+  const dish = allItems.find(i => i.slug === slug);
   if (!dish) return { title: 'Dish Not Found' };
   return {
     title: `${dish.name} | The Rustic Spoon`,
@@ -28,10 +28,17 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
 
 export default async function DishPage({ params }: Props) {
   const { slug } = await params;
-  const dish = allItems().find(i => i.slug === slug);
+  const db = await getDbData();
+  const menu = db.menu;
+  const allItems = [...menu.starters, ...menu.mains, ...menu.desserts];
+  const dish = allItems.find(i => i.slug === slug);
   if (!dish) notFound();
 
-  const related = allItems()
+  const getCategory = (id: number) =>
+    menu.starters.find(i => i.id === id) ? 'Starter' :
+    menu.mains.find(i => i.id === id)    ? 'Main Course' : 'Dessert';
+
+  const related = allItems
     .filter(i => i.id !== dish.id)
     .sort(() => Math.random() - 0.5)
     .slice(0, 3);
@@ -129,7 +136,7 @@ export default async function DishPage({ params }: Props) {
           </div>
         </div>
       </main>
-      <Footer />
+      <Footer settings={db.settings} />
     </>
   );
 }

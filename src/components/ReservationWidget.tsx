@@ -35,24 +35,38 @@ export default function ReservationWidget() {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch("https://formspree.io/f/YOUR_FORMSPREE_ID", {
+      // 1. Submit to our local DB API
+      const dbResponse = await fetch("/api/reservations", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          ...formData,
-          _subject: `New Reservation Request: ${formData.name} - ${formData.date}`
-        })
+        body: JSON.stringify(formData)
       });
-      
-      if (response.ok) {
-        setStep(4);
-      } else {
-        alert("There was an issue submitting your reservation. Please try again.");
+
+      if (!dbResponse.ok) {
+        throw new Error("Failed to save reservation to database");
       }
+
+      // 2. Submit to Formspree (only if a valid ID is provided)
+      const formspreeId = "YOUR_FORMSPREE_ID";
+      if (formspreeId && formspreeId !== "YOUR_FORMSPREE_ID") {
+        await fetch(`https://formspree.io/f/${formspreeId}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            ...formData,
+            _subject: `New Reservation Request: ${formData.name} - ${formData.date}`
+          })
+        });
+      }
+      
+      setStep(4);
     } catch (error) {
-      alert("Network error. Please try again later.");
+      console.error("Reservation error:", error);
+      alert("There was an issue submitting your reservation. Please try again.");
     } finally {
       setIsSubmitting(false);
     }

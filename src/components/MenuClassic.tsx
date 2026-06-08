@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { ArrowRight, ExternalLink } from 'lucide-react';
-import { menuData } from '../data';
+import { menuData as staticMenuData } from '../data';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import jsPDF from 'jspdf';
@@ -11,7 +11,26 @@ import autoTable from 'jspdf-autotable';
 type Tab = 'all' | 'starters' | 'mains' | 'desserts';
 const tabs: Tab[] = ['all', 'starters', 'mains', 'desserts'];
 
-export default function MenuClassic() {
+interface MenuItem {
+  id: number;
+  slug: string;
+  name: string;
+  price: string;
+  description: string;
+  image: string;
+}
+
+interface MenuClassicProps {
+  menu?: {
+    starters: MenuItem[];
+    mains: MenuItem[];
+    desserts: MenuItem[];
+  };
+}
+
+export default function MenuClassic({ menu }: MenuClassicProps) {
+  const menuData = menu || staticMenuData;
+
   const [activeTab, setActiveTab] = useState<Tab>('all');
 
   const generatePDF = () => {

@@ -19,7 +19,22 @@ const hours = [
   { days: 'Sunday',    time: '4:00 PM – 9:00 PM' },
 ];
 
-export default function Footer() {
+interface SiteSettings {
+  restaurantName: string;
+  phone: string;
+  email: string;
+  address: string;
+  hours: string;
+  instagramUrl: string;
+  facebookUrl: string;
+  tripAdvisorUrl: string;
+}
+
+interface FooterProps {
+  settings?: SiteSettings;
+}
+
+export default function Footer({ settings }: FooterProps) {
   return (
     <footer className="bg-rustic-900 text-rustic-400 relative z-10">
       {/* Top CTA band */}
@@ -45,7 +60,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link href="/" className="font-serif text-2xl font-bold text-white tracking-widest block mb-4">
-              The Rustic Spoon
+              {settings?.restaurantName || 'The Rustic Spoon'}
             </Link>
             <p className="text-embers-500 text-[10px] uppercase tracking-[0.3em] mb-6">Napa Valley · Est. 2014</p>
             <p className="text-rustic-400 leading-relaxed text-sm mb-8">
@@ -53,7 +68,7 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-4">
               <a
-                href="https://instagram.com"
+                href={settings?.instagramUrl || "https://instagram.com/therusticspoon"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-11 h-11 rounded-full bg-embers-600 flex items-center justify-center text-white hover:bg-embers-500 transition-colors shadow-md shadow-embers-600/30 group"
@@ -61,21 +76,24 @@ export default function Footer() {
                 <Instagram className="w-5 h-5 group-hover:scale-110 transition-transform" />
               </a>
               <a
-                href="https://facebook.com"
+                href={settings?.facebookUrl || "https://facebook.com/therusticspoon"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full border border-rustic-700 flex items-center justify-center text-rustic-400 hover:text-white hover:border-rustic-500 transition-colors"
               >
                 <Facebook className="w-4 h-4" />
               </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full border border-rustic-700 flex items-center justify-center text-rustic-400 hover:text-white hover:border-rustic-500 transition-colors"
-              >
-                <Twitter className="w-4 h-4" />
-              </a>
+              {settings?.tripAdvisorUrl && (
+                <a
+                  href={settings.tripAdvisorUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-full border border-rustic-700 flex items-center justify-center text-rustic-400 hover:text-white hover:border-rustic-500 transition-colors"
+                  title="TripAdvisor"
+                >
+                  <span className="text-[10px] font-bold tracking-tighter">TA</span>
+                </a>
+              )}
             </div>
           </div>
 
@@ -100,12 +118,18 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-bold text-xs uppercase tracking-[0.2em] mb-6">Hours</h4>
             <ul className="space-y-4">
-              {hours.map(({ days, time }) => (
-                <li key={days} className="flex justify-between items-baseline border-b border-rustic-800 pb-3 text-sm gap-4">
-                  <span className="shrink-0">{days}</span>
-                  <span className="text-white font-semibold text-right">{time}</span>
+              {settings?.hours ? (
+                <li className="border-b border-rustic-800 pb-3 text-sm">
+                  <span className="text-white font-semibold leading-relaxed block">{settings.hours}</span>
                 </li>
-              ))}
+              ) : (
+                hours.map(({ days, time }) => (
+                  <li key={days} className="flex justify-between items-baseline border-b border-rustic-800 pb-3 text-sm gap-4">
+                    <span className="shrink-0">{days}</span>
+                    <span className="text-white font-semibold text-right">{time}</span>
+                  </li>
+                ))
+              )}
             </ul>
           </div>
 
@@ -113,17 +137,21 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-bold text-xs uppercase tracking-[0.2em] mb-6">Contact</h4>
             <ul className="space-y-4 mb-8">
-              <li className="flex items-start gap-3 text-sm">
+              <li className="flex items-start gap-3 text-sm text-rustic-300">
                 <MapPin className="w-4 h-4 text-embers-500 mt-0.5 shrink-0" />
-                <span>123 Vineyard Drive<br />Napa Valley, CA 94558</span>
+                <span>{settings?.address || '1230 Napa Valley Hwy, St. Helena, CA 94574'}</span>
               </li>
-              <li className="flex items-center gap-3 text-sm">
+              <li className="flex items-center gap-3 text-sm text-rustic-300">
                 <Phone className="w-4 h-4 text-embers-500 shrink-0" />
-                <a href="tel:5559876543" className="hover:text-white transition-colors">(555) 987-6543</a>
+                <a href={`tel:${(settings?.phone || "(707) 555-0199").replace(/[^0-9]/g, '')}`} className="hover:text-white transition-colors">
+                  {settings?.phone || "(707) 555-0199"}
+                </a>
               </li>
-              <li className="flex items-center gap-3 text-sm">
+              <li className="flex items-center gap-3 text-sm text-rustic-300">
                 <Mail className="w-4 h-4 text-embers-500 shrink-0" />
-                <a href="mailto:hello@rusticspoon.com" className="hover:text-white transition-colors">hello@rusticspoon.com</a>
+                <a href={`mailto:${settings?.email || "reservations@therusticspoon.com"}`} className="hover:text-white transition-colors">
+                  {settings?.email || "reservations@therusticspoon.com"}
+                </a>
               </li>
             </ul>
 

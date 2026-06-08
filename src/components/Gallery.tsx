@@ -2,11 +2,16 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { galleryData } from '../data';
+import { galleryData as staticGalleryData } from '../data';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ZoomIn } from 'lucide-react';
 
-export default function Gallery() {
+interface GalleryProps {
+  gallery?: string[];
+}
+
+export default function Gallery({ gallery }: GalleryProps) {
+  const galleryData = gallery || staticGalleryData;
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
 
   return (

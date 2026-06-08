@@ -5,12 +5,18 @@ import Footer from '../../components/Footer';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 
+import { getDbData } from '../../lib/db';
+
 export const metadata: Metadata = {
   title: 'Menu | The Rustic Spoon — Farm-to-Table Cuisine Napa Valley',
   description: 'Explore our seasonally curated farm-to-table menu at The Rustic Spoon. Starters, mains, and desserts crafted daily by Executive Chef Marcus Vance.',
 };
 
-export default function MenuPage() {
+export const revalidate = 0;
+
+export default async function MenuPage() {
+  const db = await getDbData();
+
   return (
     <>
       <Navbar />
@@ -26,7 +32,7 @@ export default function MenuPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/80" />
           <div className="relative z-10 text-center px-4">
-            <p className="text-embers-400 font-semibold tracking-[0.35em] uppercase text-xs mb-4">Daily Curated</p>
+            <p className="text-embers-400 font-semibold tracking-[0.3em] uppercase text-xs mb-4">Daily Curated</p>
             <h1 className="font-serif text-5xl md:text-7xl font-bold text-white drop-shadow-xl">
               Culinary Offerings
             </h1>
@@ -34,9 +40,9 @@ export default function MenuPage() {
           </div>
         </div>
 
-        <Menu />
+        <Menu menu={db.menu} />
       </main>
-      <Footer />
+      <Footer settings={db.settings} />
     </>
   );
 }

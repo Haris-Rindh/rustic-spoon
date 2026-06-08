@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
-import { menuData } from '../data';
+import { menuData as staticMenuData } from '../data';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -13,7 +13,26 @@ type Tab = 'all' | 'starters' | 'mains' | 'desserts';
 
 const tabs: Tab[] = ['all', 'starters', 'mains', 'desserts'];
 
-export default function Menu() {
+interface MenuItem {
+  id: number;
+  slug: string;
+  name: string;
+  price: string;
+  description: string;
+  image: string;
+}
+
+interface MenuProps {
+  menu?: {
+    starters: MenuItem[];
+    mains: MenuItem[];
+    desserts: MenuItem[];
+  };
+}
+
+export default function Menu({ menu }: MenuProps) {
+  const menuData = menu || staticMenuData;
+
   const [activeTab, setActiveTab] = useState<Tab>('all');
 
   const generatePDF = () => {
